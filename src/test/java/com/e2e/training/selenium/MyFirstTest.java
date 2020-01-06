@@ -25,10 +25,10 @@ public class MyFirstTest {
 
   @Before
   public void start() {
-    FirefoxOptions options = new FirefoxOptions();
-    options.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
-    options.addArguments("start-maximized");
-    driver = new FirefoxDriver(options);
+    DesiredCapabilities caps = new DesiredCapabilities();
+    caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
+    driver = new InternetExplorerDriver();
+    System.out.println(((HasCapabilities) driver).getCapabilities());
     wait = new WebDriverWait(driver, 10);
   }
 
