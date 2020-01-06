@@ -7,11 +7,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
@@ -26,15 +30,16 @@ public class MyFirstTest {
   @Before
   public void start() {
     DesiredCapabilities caps = new DesiredCapabilities();
-    caps.setCapability(InternetExplorerDriver.REQUIRE_WINDOW_FOCUS, true);
-    driver = new InternetExplorerDriver();
+    caps.setCapability(FirefoxDriver.MARIONETTE, false); // old browser
+    // caps.setCapability(FirefoxDriver.MARIONETTE, true); // new browser
+    WebDriver driver = new FirefoxDriver();
     System.out.println(((HasCapabilities) driver).getCapabilities());
     wait = new WebDriverWait(driver, 10);
   }
 
   @Test
   public void myFirstTest() {
-    driver.get("https://www.google.pl/");
+//    driver.get("https://www.google.pl/");
    // driver.findElement(By.xpath("//span[@class='hOoLGe']")).click();
    // driver.findElement(By.xpath("//button[@id='K32']"));
    // driver.findElement(By.xpath("//span[@class='hOoLGe']")).click();
@@ -45,7 +50,7 @@ public class MyFirstTest {
 
   @After
   public void stop() {
-    driver.quit();
-    driver = null;
+   driver.quit();
+   driver = null;
   }
 }
