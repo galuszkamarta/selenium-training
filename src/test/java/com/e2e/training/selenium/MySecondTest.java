@@ -6,9 +6,9 @@ import org.openqa.selenium.By;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 /**
- * Created by m on 2020-01-03.
+ * Created by g on 2020-01-07.
  */
-public class MyFirstTest extends TestBase {
+public class MySecondTest  extends TestBase {
 
   @Test
   public void myFirstTest() {
@@ -22,7 +22,7 @@ public class MyFirstTest extends TestBase {
   public void mySecondTest() {
     driver.get("https://www.google.pl/");
     driver.findElement(By.name("q")).sendKeys("webdriver");
-    driver.findElement(By.name("//input[@name='btnK']")).click();
+    driver.findElement(By.xpath("//input[@name='btnK']")).click();
     wait.until(titleIs("webdriver - Szukaj w Google"));
   }
 
