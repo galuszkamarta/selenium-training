@@ -3,29 +3,26 @@ package com.e2e.training.selenium;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
-import static org.junit.Assert.assertFalse;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 /**
- * Created by m on 2020-01-03.
+ * Created by g on 2020-01-07.
  */
-public class MyFirstTest extends TestBase {
+public class MySecondTest  extends TestBase {
 
   @Test
   public void myFirstTest() {
     driver.get("https://www.google.pl/");
     driver.findElement(By.name("q")).sendKeys("webdriver");
-    // assertFalse(isElementPresent(By.xpath("//div[")));
-    assertFalse(isElementPresent(By.name("xxx")));
-
-
+    driver.findElement(By.xpath("//input[@name='btnK']")).click();
+    wait.until(titleIs("webdriver - Szukaj w Google"));
   }
 
   @Test
   public void mySecondTest() {
     driver.get("https://www.google.pl/");
     driver.findElement(By.name("q")).sendKeys("webdriver");
-    driver.findElement(By.name(".//input[@name='btnK']")).click();
+    driver.findElement(By.xpath("//input[@name='btnK']")).click();
     wait.until(titleIs("webdriver - Szukaj w Google"));
   }
 
@@ -33,7 +30,7 @@ public class MyFirstTest extends TestBase {
   public void myThirdTest() {
     driver.get("https://www.google.pl/");
     driver.findElement(By.name("q")).sendKeys("webdriver");
-    driver.findElement(By.xpath(".//input[@name='btnK']")).click();
+    driver.findElement(By.xpath("//input[@name='btnK']")).click();
     wait.until(titleIs("webdriver - Szukaj w Google"));
   }
 }
