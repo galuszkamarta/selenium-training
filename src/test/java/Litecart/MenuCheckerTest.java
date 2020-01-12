@@ -12,6 +12,7 @@ public class MenuCheckerTest extends TestBase {
 
   @Test
   public void menuCheckerTest() {
+    loginAdmin();
     wait.until(
             ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@class='form-control']")));
     int numberOfItems = driver.findElements(By.cssSelector("li#app-")).size();
