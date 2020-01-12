@@ -21,20 +21,20 @@ public class TestBase {
   @Before
   public void start() {
     initLiteCart();
-    loginAdmin();
-  }
-
-  public void loginAdmin() {
-    driver.findElement(By.xpath("//input[@name='username']")).sendKeys("admin");
-    driver.findElement(By.xpath("//input[@name='password']")).sendKeys("admin");
-    driver.findElement(By.xpath("//button[@name='login']")).click();
   }
 
   public void initLiteCart() {
     driver = new ChromeDriver();
     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     wait = new WebDriverWait(driver, 10);
-    driver.navigate().to("http://localhost/litecart/admin/");
+    driver.navigate().to("http://localhost/litecart/");
+  }
+
+  public void loginAdmin() {
+    driver.navigate().to("http://localhost/litecart/admin");
+    driver.findElement(By.xpath("//input[@name='username']")).sendKeys("admin");
+    driver.findElement(By.xpath("//input[@name='password']")).sendKeys("admin");
+    driver.findElement(By.xpath("//button[@name='login']")).click();
   }
 
   @After
