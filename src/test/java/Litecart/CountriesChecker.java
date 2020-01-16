@@ -39,7 +39,7 @@ public class CountriesChecker extends TestBase {
     wait.until(
             ExpectedConditions.elementToBeClickable(By.xpath("//*[text()='Countries']/parent::*")));
 
-    driver.findElement(By.cssSelector("a[href=\"http://localhost/litecart/admin/?app=countries&doc=countries")).click();
+    driver.findElement(By.xpath("//a[@href='http://localhost/litecart/admin/?app=countries&doc=countries']")).click();
     wait.until(
             ExpectedConditions.elementToBeClickable(By.xpath("//tr//td[6]")));
     List<WebElement> webElementsZone = driver.findElements(By.xpath("//tr//td[6]"));
