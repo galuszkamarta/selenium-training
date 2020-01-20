@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
@@ -14,28 +16,27 @@ import java.util.concurrent.TimeUnit;
  */
 public class TestBase {
 
-  public static ThreadLocal<WebDriver> tldriver = new ThreadLocal<>();
-  public WebDriver driver;
+  public static ThreadLocal<EventFiringWebDriver> tldriver = new ThreadLocal<>();
+  public EventFiringWebDriver driver;
   public WebDriverWait wait;
 
-  public boolean isElementPresent(By locator) {
-    try {
-      wait.until((WebDriver d) -> d.findElement(locator)); // jawne oczekiwanie
-      // driver.findElement(locator); // niejawne oczekiwanie
-      return true;
-    } catch (TimeoutException ex) { // jawne oczekiwanie
-    // } catch (NoSuchElementException ex) { // niejawne oczekiwanie
-      return false;
-    }
+public static class MyListener extends AbstractWebDriverEventListener {
+  @Override
+  public void beforeFindBy(By by, WebElement element, WebDriver driver) {
+   System.out.println(by);
   }
 
-  public boolean areElementsPresent(By locator) {
-    try {
-      return driver.findElements(locator).size() > 0;
-    } catch (InvalidSelectorException ex) {
-      return false;
-    }
+  @Override
+  public void afterFindBy(By by, WebElement element, WebDriver driver) {
+    System.out.println(by + " found");
   }
+
+  @Override
+  public void onException(Throwable throwable, WebDriver driver) {
+    System.out.println(throwable);
+  }
+}
+
 
   @Before
   public void start() {
@@ -45,11 +46,11 @@ public class TestBase {
       return;
     }
 
-    driver = new ChromeDriver();
-    // driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // niejawne oczekiwanie
+    driver = new EventFiringWebDriver(new ChromeDriver());
+    driver.register(new MyListener());
     tldriver.set(driver);
-    System.out.println(((HasCapabilities) driver).getCapabilities());
     wait = new WebDriverWait(driver, 10);
+
 
     Runtime.getRuntime().addShutdownHook(
             new Thread(() -> {
