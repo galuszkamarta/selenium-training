@@ -1,5 +1,6 @@
 package com.e2e.training.selenium;
 
+import com.google.common.io.Files;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.*;
@@ -8,7 +9,8 @@ import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -20,22 +22,30 @@ public class TestBase {
   public EventFiringWebDriver driver;
   public WebDriverWait wait;
 
-public static class MyListener extends AbstractWebDriverEventListener {
-  @Override
-  public void beforeFindBy(By by, WebElement element, WebDriver driver) {
-   System.out.println(by);
-  }
+  public static class MyListener extends AbstractWebDriverEventListener {
+    @Override
+    public void beforeFindBy(By by, WebElement element, WebDriver driver) {
+      System.out.println(by);
+    }
 
-  @Override
-  public void afterFindBy(By by, WebElement element, WebDriver driver) {
-    System.out.println(by + " found");
-  }
+    @Override
+    public void afterFindBy(By by, WebElement element, WebDriver driver) {
+      System.out.println(by + " found");
+    }
 
-  @Override
-  public void onException(Throwable throwable, WebDriver driver) {
-    System.out.println(throwable);
+    @Override
+    public void onException(Throwable throwable, WebDriver driver) {
+      System.out.println(throwable);
+      File tmp = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+      File screen = new File("sreen-" + System.currentTimeMillis() + ".png");
+      try {
+        Files.copy(tmp, screen);
+      } catch (IOException e) {
+       e.printStackTrace();
+       }
+      System.out.println(screen);
+    }
   }
-}
 
 
   @Before
