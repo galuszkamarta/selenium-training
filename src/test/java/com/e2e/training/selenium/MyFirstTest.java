@@ -21,7 +21,7 @@ public class MyFirstTest extends TestBase {
     driver.get("https://www.google.pl/");
     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     driver.findElement(By.name("q")).sendKeys("webdriver");
-    driver.findElement(By.name("btnK")).click();
+    driver.findElement(By.name("_btnK")).click();
   }
 
   @Test
