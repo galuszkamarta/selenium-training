@@ -19,9 +19,7 @@ public class CountriesChecker extends TestBase {
   @Test
   public void countriesCheckerTest() {
     loginAdmin();
-    wait.until(
-            ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@class='form-control']")));
-    driver.findElement(By.xpath("//*[text()='Countries']/parent::*")).click();
+    click("//*[text()='Countries']/parent::*");
     List<WebElement> countries = driver.findElements(By.xpath("//tr//td[5]"));
     List<String> countriesList = new ArrayList<String>();
     for (WebElement e : countries) {
@@ -36,12 +34,8 @@ public class CountriesChecker extends TestBase {
   @Test
   public void zonesCheckerTest() {
     loginAdmin();
-    wait.until(
-            ExpectedConditions.elementToBeClickable(By.xpath("//*[text()='Countries']/parent::*")));
-
-    driver.findElement(By.xpath("//a[@href='http://localhost/litecart/admin/?app=countries&doc=countries']")).click();
-    wait.until(
-            ExpectedConditions.elementToBeClickable(By.xpath("//tr//td[6]")));
+    click("//a[@href='http://localhost/litecart/admin/?app=countries&doc=countries']");
+    waitForElementToBeGone("//tr//td[6]");
     List<WebElement> webElementsZone = driver.findElements(By.xpath("//tr//td[6]"));
     List<String> numberofZonesList = new ArrayList<String>();
     for (WebElement e : webElementsZone) {
@@ -59,9 +53,7 @@ public class CountriesChecker extends TestBase {
         List<String> copy = zoneList;
         Collections.sort(copy);
         Assert.assertEquals(zoneList, copy);
-        wait.until(
-                ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@name='save']")));
-        driver.findElement(By.xpath("//*[text()='Countries']/parent::*")).click();
+        click("//button[@name='save']");
       }
     }
   }
@@ -70,15 +62,11 @@ public class CountriesChecker extends TestBase {
   @Test
   public void geoZonesCheckerTest() {
     loginAdmin();
-    driver.findElement(By.xpath("//*[text()='Geo Zones']/parent::*")).click();
-    wait.until(
-            ExpectedConditions.elementToBeClickable(By.xpath("//tr//td[3]//a")));
+    click("//*[text()='Geo Zones']/parent::*");
+    waitForElementToBeGone("//tr//td[3]//a");
     int nameOfCountries = driver.findElements(By.xpath("//tr//td[3]//a")).size();
     for (int i = 0; i < nameOfCountries; i++) {
-      wait.until(
-              ExpectedConditions.visibilityOfElementLocated(By.xpath("//tr//td[3]//a")));
-      driver.findElements(By.xpath("//tr//td[3]//a")).get(i).click();
-
+      clickLinksByIndex("//tr//td[3]//a", i);
       List<WebElement> zones = driver.findElements(By.xpath("//tr//td[3]"));
       List<String> zoneList = new ArrayList<String>();
       for (WebElement e : zones) {
@@ -87,10 +75,7 @@ public class CountriesChecker extends TestBase {
       List<String> copy = zoneList;
       Collections.sort(copy);
       Assert.assertEquals(zoneList, copy);
-
-      wait.until(
-              ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@name='save']")));
-      driver.findElement(By.xpath("//*[text()='Geo Zones']/parent::*")).click();
+      click("//button[@name='save']");
     }
   }
   }

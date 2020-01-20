@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
@@ -69,10 +70,14 @@ public class TestBase {
 
 
   public void loginAdmin() {
-    driver.navigate().to("http://localhost/litecart/admin");
-    driver.findElement(By.xpath("//input[@name='username']")).sendKeys("admin");
-    driver.findElement(By.xpath("//input[@name='password']")).sendKeys("admin");
-    driver.findElement(By.xpath("//button[@name='login']")).click();
+    goToPage("http://localhost/litecart/admin");
+    fillForm("//input[@name='username']", "admin");
+    fillForm("//input[@name='password']", "admin");
+    click("//button[@name='login']");
+  }
+
+  public void goToPage(String locator) {
+    driver.navigate().to(locator);
   }
 
   public void selectFromDropdown(String locator, String text) {
@@ -94,6 +99,25 @@ public class TestBase {
     driver.findElement(By.xpath(locator)).click();
   }
 
+  public void clickLinksByIndex(String locator, int index) {
+    wait.until(
+            ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+    driver.findElements(By.xpath(locator)).get(index).click();
+  }
+
+  public void fillForm(String locator, String text) {
+    wait.until(
+            ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+    driver.findElement(By.xpath(locator)).click();
+    driver.findElement(By.xpath(locator)).clear();
+    driver.findElement(By.xpath(locator)).sendKeys(text);
+  }
+
+  public void attachFile(String locator, File text) {
+    wait.until(
+            ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
+    driver.findElement(By.xpath(locator)).sendKeys(text.getAbsolutePath());
+  }
 
   public void waitForElementToBeGone(String locator) {
     if (isElementPresent(locator)) {
@@ -105,6 +129,8 @@ public class TestBase {
   boolean isElementPresent(String locator) {
     return driver.findElements(By.xpath(locator)).size() > 0;
   }
+
+   public void waitnUntilPageIsLoaded() {}
 
   @After
   public void stop() {
