@@ -1,6 +1,9 @@
 package com.e2e.training.selenium;
 
 import com.google.common.io.Files;
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
+import net.lightbody.bmp.client.ClientUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.*;
@@ -28,6 +31,7 @@ public class TestBase {
   public static ThreadLocal<EventFiringWebDriver> tldriver = new ThreadLocal<>();
   public EventFiringWebDriver driver;
   public WebDriverWait wait;
+  public BrowserMobProxy proxy;
 
   public static class MyListener extends AbstractWebDriverEventListener {
     @Override
@@ -63,12 +67,15 @@ public class TestBase {
       return;
     }
 
-    DesiredCapabilities cap = DesiredCapabilities.chrome();
-    LoggingPreferences logPrefs = new LoggingPreferences();
-    logPrefs.enable(LogType.PERFORMANCE, Level.ALL);
-    cap.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
+    proxy = new BrowserMobProxyServer();
+    proxy.start(0);
+    Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+    DesiredCapabilities capabilities = new DesiredCapabilities();
+    //Proxy proxy = new Proxy();
+   // proxy.setHttpProxy("myproxy:8888");
+    capabilities.setCapability(CapabilityType.PROXY, seleniumProxy);
 
-    driver = new EventFiringWebDriver(new ChromeDriver());
+    driver = new EventFiringWebDriver(new ChromeDriver(capabilities));
     driver.register(new MyListener());
     tldriver.set(driver);
     wait = new WebDriverWait(driver, 10);
