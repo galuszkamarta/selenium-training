@@ -1,6 +1,11 @@
 package Litecart;
 
+import Litecart.Tests.DataProviders;
+import Litecart.model.Item;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -8,10 +13,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Created by m on 2020-01-16.
  */
+
+@RunWith(DataProviderRunner.class)
+
 public class AddItemsToShoppingCartTest extends TestBase {
 
   @Test
-  public void testAddItemsToShoppingCart() {
+  public void shoppingItem() {
     for (int i = 0; i <= 2; i++) {
       AddItemToShoppingCart();
       click("//img[@src='/litecart/images/logotype.png']/parent::*");
@@ -23,10 +31,10 @@ public class AddItemsToShoppingCartTest extends TestBase {
   public void AddItemToShoppingCart() {
     click("//a[@href='http://localhost/litecart/en/rubber-ducks-c-1/subcategory-c-2/yellow-duck-p-1']");
     waitForElementToBeGone("//div[@class='loader-wrapper']");
-    selectFromDropdown("//select[@name='options[Size]']", "Small");
+    selectFromDropdown("//select[@name='options[Size]']", "size");
     click("//button[@name='add_cart_product']");
     String numberOfItemsBeforeAdding = driver.findElement(By.xpath("//div/span[@class='quantity']")).getText();
-    waitForElementToChange("//div/span[@class='quantity']", Integer.toString((Integer.valueOf(numberOfItemsBeforeAdding)+1)));
+    waitForElementToChange("//div/span[@class='quantity']", Integer.toString((Integer.valueOf(numberOfItemsBeforeAdding) + 1)));
     click("//button[@aria-label='Close']");
 
     click("//a[@href='http://localhost/litecart/en/checkout']");
@@ -46,7 +54,6 @@ public class AddItemsToShoppingCartTest extends TestBase {
     click("//a[@href='http://localhost/litecart/en/checkout']");
     for (int d = numberOfItem; d >= 0; d--) {
       waitForElementToBeGone("//div[@class='loader-wrapper']");
-
       type("//input[@name='item[4d78797fbec0162d86361741abf2db41][quantity]']", Integer.toString(d));
       click("//button[@name='update_cart_item']");
     }
