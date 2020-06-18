@@ -23,7 +23,6 @@ public class AddItemsAndClearCartTests extends TestBase {
       app.landingPage.openShoppingCart();
       app.cartPage.waitLoaderWrapper();
       app.landingPage.open();
-
     }
     app.cartPage.deleteItemFromShoppingCart();
   }

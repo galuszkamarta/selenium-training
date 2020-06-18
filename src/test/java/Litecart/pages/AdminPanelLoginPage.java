@@ -16,10 +16,6 @@ public class AdminPanelLoginPage extends Page {
     PageFactory.initElements(driver, this);
   }
 
-  public void open() {
-    driver.get("http://localhost/litecart/admin");
-  }
-
   @FindBy(xpath = "//input[@name='username']")
   public WebElement usernameInput;
 
@@ -29,6 +25,9 @@ public class AdminPanelLoginPage extends Page {
   @FindBy(xpath = "//button[@name='login']")
   public WebElement loginBaton;
 
+  public void open() {
+    driver.get("http://localhost/litecart/admin");
+  }
 
   public AdminPanelLoginPage enterUsername(String username) {
    fillForm(usernameInput, username);
@@ -45,8 +44,8 @@ public class AdminPanelLoginPage extends Page {
     wait.until((WebDriver d) -> d.findElement(By.id("box-apps-menu")));
   }
 
-
   public void EnterAdminCredentials() {
+
     enterUsername("admin").enterPassword("admin").submitLogin();
   }
 }

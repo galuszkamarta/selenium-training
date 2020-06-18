@@ -11,33 +11,40 @@ import org.openqa.selenium.chrome.ChromeDriver;
   public class Application {
 
   private WebDriver driver;
-
-
-  public RegistrationPage registrationPage;
+  public AddNewCountryPage addNewCountryPage;
   public AdminPanelLoginPage adminPanelLoginPage;
-  public CustomerListPage customerListPage;
-  public LandingPage landingPage;
+  public AdminPanelPage adminPanelPage;
   public CartPage cartPage;
+  public CatalogListPage catalogListPage;
+  public CategoryFormPage categoryFormPage;
+  public CountriesListPage countriesListPage;
+  public CustomerListPage customerListPage;
+  public EditProductPage editProductPage;
+  public GeoZonesListPage geoZonesListPage;
   public ItemPage itemPage;
+  public LandingPage landingPage;
+  public RegistrationPage registrationPage;
 
   public Application() {
     driver = new ChromeDriver();
-    registrationPage = new RegistrationPage(driver);
+    addNewCountryPage = new AddNewCountryPage(driver);
     adminPanelLoginPage = new AdminPanelLoginPage(driver);
-    customerListPage = new CustomerListPage(driver);
-    landingPage = new LandingPage(driver);
+    adminPanelPage = new AdminPanelPage(driver);
     cartPage = new CartPage(driver);
+    catalogListPage = new CatalogListPage(driver);
+    categoryFormPage = new CategoryFormPage(driver);
+    countriesListPage = new CountriesListPage(driver);
+    customerListPage = new CustomerListPage(driver);
+    editProductPage = new EditProductPage(driver);
+    geoZonesListPage = new GeoZonesListPage(driver);
     itemPage = new ItemPage(driver);
+    landingPage = new LandingPage(driver);
+    registrationPage = new RegistrationPage(driver);
   }
 
   public void quit() {
     driver.quit();
   }
-
-
-
-
-
 }
 
 

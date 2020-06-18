@@ -16,10 +16,31 @@ public class LandingPage extends Page {
   @FindBy(xpath = "//a[@href='http://localhost/litecart/en/checkout']")
   private WebElement ShoppingCartLink;
 
+  @FindBy(xpath = "//div[@class='name']")
+  private WebElement tileCP;
+
+  @FindBy(xpath = "//s[@class='regular-price']")
+  private WebElement regularPriceCP;
+
+  @FindBy(xpath = "//strong[@class='campaign-price']")
+  private WebElement campaignPriceCP;
+
   public LandingPage(WebDriver driver) {
     super(driver);
     PageFactory.initElements(driver, this);
   }
+
+  public String getTitleCP() {
+    return tileCP.getText();
+  }
+  public String getRegularPriceCP() {
+    return regularPriceCP.getText();
+  }
+
+  public String getCampaignPriceCP() {
+    return campaignPriceCP.getText();
+  }
+
 
   @Override
   public void open() {
@@ -28,6 +49,7 @@ public class LandingPage extends Page {
 
   public void chooseFirstItem() {
     click(firstItem);
+    waitForElementToBeGone("//div[@class='loader-wrapper']");
   }
 
   public void openShoppingCart() {
@@ -35,5 +57,4 @@ public class LandingPage extends Page {
   }
 
 }
-
 
