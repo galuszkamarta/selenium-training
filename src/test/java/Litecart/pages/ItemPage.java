@@ -18,9 +18,6 @@ public class ItemPage extends Page {
     PageFactory.initElements(driver, this);
   }
 
-  public void open() {
-    driver.get("http://localhost/litecart/en/rubber-ducks-c-1/yellow-duck-p-1"); }
-
   @FindBy(xpath = "//input[@name='quantity']")
   private WebElement quantityInput;
 
@@ -36,7 +33,28 @@ public class ItemPage extends Page {
   @FindBy(xpath = "//button[@aria-label='Close']")
   private WebElement closeItemBaton;
 
+  @FindBy(xpath = "//h1[@class='title']")
+  private WebElement tileItem;
 
+  @FindBy(xpath = "//del[@class='regular-price']")
+  private WebElement regularPrice;
+
+  @FindBy(xpath = "//strong[@class='campaign-price']")
+  private WebElement campaignPrice;
+
+  public String getTileItem() {
+    return tileItem.getText();
+  }
+  public String getRegularPrice() {
+    return regularPrice.getText();
+  }
+  public String getCampaignPrice() {
+    return campaignPrice.getText();
+  }
+
+
+  public void open() {
+    driver.get("http://localhost/litecart/en/rubber-ducks-c-1/yellow-duck-p-1"); }
 
   public void addItemToCart(Item item) {
     waitForElementToBeGone("//div[@class='loader-wrapper']");
@@ -53,6 +71,4 @@ public class ItemPage extends Page {
     WebDriverWait wait = new WebDriverWait(driver, 30);
     wait.until(ExpectedConditions.textToBePresentInElement(element, expected));
   }
-
-
   }

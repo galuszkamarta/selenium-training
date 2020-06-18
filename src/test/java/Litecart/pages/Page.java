@@ -4,10 +4,12 @@ import Litecart.app.Application;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by m on 2020-01-24.
@@ -54,8 +56,29 @@ public abstract class Page {
     }
   }
 
+  public void attachFile(WebElement element, File text) {
+    wait.until(
+            ExpectedConditions.visibilityOf(element));
+    wait.until(
+            ExpectedConditions.visibilityOf(element)).sendKeys(text.getAbsolutePath());
+  }
+
+  public void BrowserLog() {
+    List<LogEntry> logList = driver.manage().logs().get("browser").getAll();
+    if (logList.size()!= 0) {
+      for (LogEntry l : logList)
+        System.out.println(l);
+    }
+    else
+      System.out.println("The Log has not new messeges!");
+  }
+
   boolean isElementPresent(String locator) {
     return driver.findElements(By.xpath(locator)).size() > 0;
+  }
+
+  public void clickLinksByIndex(List<WebElement> products, int i) {
+    products.get(i).click();
   }
 
   public abstract void open();
